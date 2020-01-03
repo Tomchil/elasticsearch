@@ -27,4 +27,15 @@ public class Result<T> implements Serializable {
         this.data = data;
     }
 
+    public static <T> Result<T> success() {
+        return new Result<>(200, "SUCCESS");
+    }
+
+    public static <T> Result<T> success(T data) {
+        return new Result<>(data);
+    }
+
+    public static <T> Result<T> error() {
+        return new Result<>(400, "error");
+    }
 }
