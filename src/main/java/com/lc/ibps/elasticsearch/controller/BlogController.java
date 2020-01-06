@@ -1,10 +1,9 @@
 package com.lc.ibps.elasticsearch.controller;
 
-import com.lc.ibps.elasticsearch.entity.Blog;
+import com.lc.ibps.elasticsearch.entity.BlogByRep;
 import com.lc.ibps.elasticsearch.repository.BlogRepository;
 import com.lc.ibps.elasticsearch.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,50 +18,47 @@ public class BlogController {
 
     @Autowired
     private BlogRepository blogRepository;
-    @Autowired
-    private ElasticsearchTemplate elasticsearchTemplate;
-
 
     @PostMapping("/add")
-    public Result<Blog> add(@RequestBody Blog blog) {
-        blogRepository.save(blog);
+    public Result<BlogByRep> add(@RequestBody BlogByRep blogByRep) {
+        blogRepository.save(blogByRep);
         return Result.success();
     }
 
     @GetMapping("/get/{id}")
-    public Result<Blog> getById(@PathVariable String id) {
+    public Result<BlogByRep> getById(@PathVariable String id) {
         if (StringUtils.isEmpty(id)) {
             return Result.error();
         }
 
-        Optional<Blog> blogOptional = blogRepository.findById(id);
+        Optional<BlogByRep> blogOptional = blogRepository.findById(id);
         if (blogOptional.isPresent()) {
-            Blog blog = blogOptional.get();
-            return Result.success(blog);
+            BlogByRep blogByRep = blogOptional.get();
+            return Result.success(blogByRep);
         }
         return Result.error();
     }
 
     @RequestMapping("/get")
-    public Result<List<Blog>> getAll() {
-        Iterable<Blog> iterable = blogRepository.findAll();
-        List<Blog> list = new ArrayList<>();
+    public Result<List<BlogByRep>> getAll() {
+        Iterable<BlogByRep> iterable = blogRepository.findAll();
+        List<BlogByRep> list = new ArrayList<>();
         iterable.forEach(list::add);
         return Result.success(list);
     }
 
     @PostMapping("update")
-    public Result<Blog> updateById(@RequestBody Blog blog) {
-        String id = blog.getId();
+    public Result<BlogByRep> updateById(@RequestBody BlogByRep blogByRep) {
+        String id = blogByRep.getId();
         if (StringUtils.isEmpty(id)) {
             return Result.error();
         }
-        blogRepository.save(blog);
+        blogRepository.save(blogByRep);
         return Result.success();
     }
 
     @DeleteMapping("/delete/{id}")
-    public Result<Blog> deleteById(@PathVariable String id) {
+    public Result<BlogByRep> deleteById(@PathVariable String id) {
         if (StringUtils.isEmpty(id)) {
             return Result.error();
         }
@@ -71,18 +67,18 @@ public class BlogController {
     }
 
     @DeleteMapping("/delete")
-    public Result<Blog> deleteAll() {
+    public Result<BlogByRep> deleteAll() {
         blogRepository.deleteAll();
         return Result.success();
     }
 
     @GetMapping("/rep/search/title")
-    public Result<List<Blog>> repSearchTitle(String keyword) {
+    public Result<List<BlogByRep>> repSearchTitle(String keyword) {
         if (StringUtils.isEmpty(keyword)) {
             return Result.error();
         }
-        List<Blog> blogs = blogRepository.findByTitleLike(keyword);
-        return Result.success(blogs);
+        List<BlogByRep> blogByReps = blogRepository.findByTitleLike(keyword);
+        return Result.success(blogByReps);
     }
 
 }

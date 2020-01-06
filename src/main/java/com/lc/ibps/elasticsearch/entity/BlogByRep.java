@@ -40,7 +40,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(indexName = "blog", type = "java")
-public class Blog implements Serializable {
+public class BlogByRep implements Serializable {
 
     private static final long serialVersionUID = -6459278471002007777L;
 
