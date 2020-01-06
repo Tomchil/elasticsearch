@@ -5,16 +5,12 @@ import com.lc.ibps.elasticsearch.repository.BlogRepository;
 import com.lc.ibps.elasticsearch.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 
 
 @RestController
@@ -25,6 +21,7 @@ public class BlogController {
     private BlogRepository blogRepository;
     @Autowired
     private ElasticsearchTemplate elasticsearchTemplate;
+
 
     @PostMapping("/add")
     public Result<Blog> add(@RequestBody Blog blog) {
@@ -88,21 +85,4 @@ public class BlogController {
         return Result.success(blogs);
     }
 
-    @GetMapping("/rep/search/title/custom")
-    public Result<List<Blog>> repSearchTitleCustom(String keyword) {
-        if (StringUtils.isEmpty(keyword))
-            return Result.error();
-        return Result.success(blogRepository.findByTitleCustom(keyword));
-    }
-
-    @GetMapping("/search/title")
-    public Result<List<Blog>> searchTitle(String keyword) {
-        if (StringUtils.isEmpty(keyword))
-            return Result.error();
-        SearchQuery searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(queryStringQuery(keyword))
-                .build();
-        List<Blog> list = elasticsearchTemplate.queryForList(searchQuery, Blog.class);
-        return Result.success(list);
-    }
 }
