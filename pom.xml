@@ -54,12 +54,12 @@
             </exclusions>
         </dependency>
 
+        <!--修改elasticsearch依赖，对应elasticsearch6.8.0版本-->
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>elasticsearch-rest-high-level-client</artifactId>
             <version>${elasticsearch.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
@@ -82,13 +82,13 @@
             <version>${elasticsearch.version}</version>
         </dependency>
 
+        <!--对应elasticsearch6.8.0版本的spring-data和commons依赖-->
         <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-elasticsearch -->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-elasticsearch</artifactId>
             <version>3.2.0.RELEASE</version>
         </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-commons -->
         <dependency>
             <groupId>org.springframework.data</groupId>
@@ -96,6 +96,7 @@
             <version>2.2.0.RELEASE</version>
         </dependency>
 
+        <!--JestClient依赖-->
         <!-- https://mvnrepository.com/artifact/io.searchbox/jest -->
         <dependency>
             <groupId>io.searchbox</groupId>

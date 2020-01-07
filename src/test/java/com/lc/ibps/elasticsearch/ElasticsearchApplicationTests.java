@@ -38,7 +38,7 @@ public class ElasticsearchApplicationTests {
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse("2018-08-08");
         blogByJest.setTime(date);
         blogByJest.setTitle("JestClient 测试");
-        Index index = new Index.Builder(blogByJest).index("blog").type("java").build();
+        Index index = new Index.Builder(blogByJest).index("blogs").type("java").build();
         try {
             jestClient.execute(index);
         } catch (IOException e) {
